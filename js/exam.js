@@ -1,24 +1,37 @@
-// 根據模組選題庫（目前只有 OHCA）
-function getQuestionsByModule(module) {
-  if (module === "OHCA") return OHCA_QUESTIONS;
-  return [];
-}
-
 let QUESTIONS = [];
-
-
 let currentIndex = 0;
 let selectedOption = null;
 let timeLeft = 90;
 let timer = null;
 
-// ===== 測驗流程 =====
+// 根據模組選題庫（防呆）
+function getQuestionsByModule(module) {
+  if (module === "OHCA" && typeof OHCA_QUESTIONS !== "undefined") {
+    return OHCA_QUESTIONS;
+  }
+  return [];
+}
+
+// ===== 啟動測驗 =====
 function startExam(mode) {
   const module = localStorage.getItem("current_module");
   QUESTIONS = getQuestionsByModule(module);
 
+  if (QUESTIONS.length === 0) {
+    alert("題庫載入失敗，請重新整理或確認題庫檔案");
+    return;
+  }
+
   currentIndex = 0;
-  function renderQuestion() {
+  renderQuestion();
+
+  if (mode === "timed") {
+    startTimer(onTimeUp);
+  }
+}
+
+// ===== 顯示題目 =====
+function renderQuestion() {
   const q = QUESTIONS[currentIndex];
 
   document.getElementById("question").innerText =
@@ -38,50 +51,18 @@ function startExam(mode) {
   });
 }
 
-
-  if (mode === "timed") {
-    startTimer(onTimeUp);
-  }
-}
-
-
-  if (mode === "timed") {
-    startTimer(onTimeUp);
-  }
-}
-
-function renderQuestion() {
-  const q = MOCK_QUESTIONS[currentIndex];
-
-  document.getElementById("question").innerText =
-    `第 ${currentIndex + 1} 題：${q.text}`;
-
-  const optionArea = document.getElementById("options");
-  optionArea.innerHTML = "";
-  selectedOption = null;
-
-  q.options.forEach((opt, index) => {
-    const btn = document.createElement("button");
-    btn.innerText = opt;
-    btn.onclick = () => selectOption(index, btn);
-    btn.style.display = "block";
-    btn.style.margin = "8px 0";
-    optionArea.appendChild(btn);
-  });
-}
-
+// ===== 選項點擊 =====
 function selectOption(index, button) {
   selectedOption = index;
 
-  // 重置所有選項樣式
   document.querySelectorAll("#options button").forEach(btn => {
     btn.style.backgroundColor = "";
   });
 
-  // 標示選到的
   button.style.backgroundColor = "#cce5ff";
 }
 
+// ===== 下一題 =====
 function nextQuestion() {
   if (selectedOption === null) {
     alert("請先選擇一個選項");
@@ -90,14 +71,14 @@ function nextQuestion() {
 
   currentIndex++;
 
-  if (currentIndex >= MOCK_QUESTIONS.length) {
+  if (currentIndex >= QUESTIONS.length) {
     finishExam();
   } else {
     renderQuestion();
   }
 }
 
-// ===== 計時器（原本的 그대로）=====
+// ===== 計時器 =====
 function startTimer(onTimeUp) {
   updateTimerUI();
   timer = setInterval(() => {
@@ -119,7 +100,7 @@ function stopTimer() {
   clearInterval(timer);
 }
 
-// ===== 結束測驗 =====
+// ===== 結束 =====
 function onTimeUp() {
   alert("時間到！");
   finishExam();
