@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>測驗大廳</title>
+</head>
+<body>
+  <h2 id="userInfo"></h2>
+  <button onclick="goMode('OHCA')">🚑 OHCA</button>
+  <button onclick="goMode('Trauma')">🩸 外傷</button>
+  <script src="js/auth.js"></script>
+  <script>
+    const user = getUser();
+    if (!user) location.href = "index.html";
+    document.getElementById("userInfo").innerText = `${user.name}｜${user.unit}`;
+    function goMode(module) {
+      localStorage.setItem("current_module", module);
+      location.href = "mode.html";
+    }
+  </script>
+</body>
+</html>

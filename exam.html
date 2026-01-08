@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>測驗中</title>
+</head>
+<body>
+  <h2 id="status"></h2>
+  <h3 id="timer"></h3>
+  <p id="question"></p>
+  <button onclick="nextQuestion()">下一題</button>
+  <br><br>
+  <button onclick="finishExam()">提前結束測驗</button>
+  <script src="js/exam.js"></script>
+  <script>
+    const module = localStorage.getItem("current_module");
+    const mode = localStorage.getItem("exam_mode");
+    document.getElementById("status").innerText =
+      `${module}｜${mode === "timed" ? "90 秒限時" : "練習模式"}`;
+    startExam(mode);
+  </script>
+</body>
+</html>

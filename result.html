@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>測驗結果</title>
+</head>
+<body>
+  <h2>測驗完成</h2>
+  <p>分數：<span id="score"></span></p>
+  <button onclick="location.href='lobby.html'">回到大廳</button>
+  <script>
+    document.getElementById("score").innerText =
+      localStorage.getItem("last_score");
+  </script>
+</body>
+</html>
