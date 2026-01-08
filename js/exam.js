@@ -1,18 +1,11 @@
-// ===== 假題庫（結構已接近正式題庫）=====
-const MOCK_QUESTIONS = [
-  {
-    text: "假題目 1（流程測試）",
-    options: ["選項 A", "選項 B", "選項 C", "選項 D"]
-  },
-  {
-    text: "假題目 2（流程測試）",
-    options: ["選項 A", "選項 B", "選項 C", "選項 D"]
-  },
-  {
-    text: "假題目 3（流程測試）",
-    options: ["選項 A", "選項 B", "選項 C", "選項 D"]
-  }
-];
+// 根據模組選題庫（目前只有 OHCA）
+function getQuestionsByModule(module) {
+  if (module === "OHCA") return OHCA_QUESTIONS;
+  return [];
+}
+
+let QUESTIONS = [];
+
 
 let currentIndex = 0;
 let selectedOption = null;
