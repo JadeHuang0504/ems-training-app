@@ -14,8 +14,17 @@ let timer = null;
 
 // ===== 測驗流程 =====
 function startExam(mode) {
+  const module = localStorage.getItem("current_module");
+  QUESTIONS = getQuestionsByModule(module);
+
   currentIndex = 0;
   renderQuestion();
+
+  if (mode === "timed") {
+    startTimer(onTimeUp);
+  }
+}
+
 
   if (mode === "timed") {
     startTimer(onTimeUp);
