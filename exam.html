@@ -15,13 +15,16 @@
   <div id="options"></div>
 
   <br>
-  <button onclick="nextQuestion()">下一題</button>
+
+  <!-- 一定要指定 type -->
+  <button type="button" onclick="nextQuestion()">下一題</button>
+
   <br><br>
-  <button onclick="finishExam()">提前結束測驗</button>
+
+  <button type="button" onclick="finishExam()">提前結束測驗</button>
 
   <script src="js/data/ohca.js"></script>
   <script src="js/exam.js"></script>
-
   <script>
     const module = localStorage.getItem("current_module");
     const mode = localStorage.getItem("exam_mode");
