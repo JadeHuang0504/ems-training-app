@@ -11,26 +11,32 @@
 
   <p id="question"></p>
 
-  <!-- 選項區 -->
   <div id="options"></div>
 
   <br>
 
-  <!-- 一定要指定 type -->
-  <button type="button" onclick="nextQuestion()">下一題</button>
-
+  <!-- 注意：沒有 onclick -->
+  <button type="button" id="nextBtn">下一題</button>
   <br><br>
+  <button type="button" id="finishBtn">提前結束測驗</button>
 
-  <button type="button" onclick="finishExam()">提前結束測驗</button>
-
+  <!-- 一定是：題庫 → 邏輯 -->
   <script src="js/data/ohca.js"></script>
   <script src="js/exam.js"></script>
+
   <script>
     const module = localStorage.getItem("current_module");
     const mode = localStorage.getItem("exam_mode");
 
     document.getElementById("status").innerText =
       `${module}｜${mode === "timed" ? "90 秒限時" : "練習模式"}`;
+
+    // ⚠️ 在這裡「綁定事件」
+    document.getElementById("nextBtn")
+      .addEventListener("click", nextQuestion);
+
+    document.getElementById("finishBtn")
+      .addEventListener("click", finishExam);
 
     startExam(mode);
   </script>
