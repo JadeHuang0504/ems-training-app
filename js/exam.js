@@ -18,7 +18,26 @@ function startExam(mode) {
   QUESTIONS = getQuestionsByModule(module);
 
   currentIndex = 0;
-  renderQuestion();
+  function renderQuestion() {
+  const q = QUESTIONS[currentIndex];
+
+  document.getElementById("question").innerText =
+    `第 ${currentIndex + 1} 題：${q.text}`;
+
+  const optionArea = document.getElementById("options");
+  optionArea.innerHTML = "";
+  selectedOption = null;
+
+  q.options.forEach((opt, index) => {
+    const btn = document.createElement("button");
+    btn.innerText = opt;
+    btn.onclick = () => selectOption(index, btn);
+    btn.style.display = "block";
+    btn.style.margin = "8px 0";
+    optionArea.appendChild(btn);
+  });
+}
+
 
   if (mode === "timed") {
     startTimer(onTimeUp);
